@@ -13,8 +13,8 @@ const pool = new Pool({
 });
 
 const issueToken = (id: number, email: string) => {
-  return jwt.sign({ id, email }, process.env.JWT_SECRET!, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+  return jwt.sign({ id, email }, "cyber", {
+    expiresIn: 600,
   });
 };
 
@@ -80,8 +80,10 @@ const signinPassword = catchAsync(
       let user = rows[0];
       user.password = null;
 
+      console.log("manage cookie")
       manageCookieTokenSendResponse(user, 200, req, res);
     } catch (error: any) {
+      console.log(error)
       return next(new AppError(error.message, 422));
     }
   }
